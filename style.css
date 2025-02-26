@@ -1,0 +1,151 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.container {
+  width: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+.container:hover {
+  transform: scale(1.02);
+}
+
+h1 {
+  color: #ffcc00;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Field Selection and Input */
+.add-field-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-field-section select,
+.add-field-section input {
+  padding: 12px;
+  border: 2px solid #ffcc00;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  background: #1b1b2f;
+  color: white;
+}
+
+.add-field-section button {
+  padding: 12px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.add-field-section button:hover {
+  background: linear-gradient(135deg, #ff9900, #ff6600);
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #ffcc00;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ffcc00;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #1b1b2f;
+  color: white;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Button Styling */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+
+#saveButton {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+}
+
+#previewButton {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+}
+
+#submitButton {
+  background: linear-gradient(135deg, #2980b9, #3498db);
+  color: white;
+}
+
+#editButton {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Preview Section */
+.preview {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #ffcc00;
+}

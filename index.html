@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form with Poll & Media</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Create Your Form</h1>
+    
+    <div class="add-field-section">
+      <select id="fieldType">
+        <option value="text">Text</option>
+        <option value="email">Email</option>
+        <option value="number">Number</option>
+        <option value="textarea">Textarea</option>
+        <option value="poll">Poll</option>
+        <option value="media">Media Upload</option>
+      </select>
+      <input type="text" id="fieldLabel" placeholder="Field Label">
+      <button id="addFieldButton">➕ Add</button>
+    </div>
+    
+    <form id="form">
+      <div id="formFields"></div>
+      <button type="button" id="previewButton">👁 Preview</button>
+      <button type="button" id="submitForm">✔ Submit</button>
+    </form>
+    
+    <div class="preview" id="previewDiv" style="display: none;">
+      <h2>Preview Your Information</h2>
+      <div id="previewContent"></div>
+      <button id="editButton">✏ Edit</button>
+    </div>
+  </div>
+
+  <script>
+    let formData = {}; // Stores form data
+
+    document.getElementById('addFieldButton').addEventListener('click', function() {
+      const type = document.getElementById('fieldType').value;
+      const label = document.getElementById('fieldLabel').value.trim();
+      const formFields = document.getElementById('formFields');
+
+      if (label === "") {
+        alert("Please enter a field label.");
+        return;
+      }
+
+      let fieldWrapper = document.createElement('div');
+      fieldWrapper.classList.add('form-group');
+
+      let labelElement = document.createElement('label');
+      labelElement.textContent = label;
+      fieldWrapper.appendChild(labelElement);
+
+      if (type === 'poll') {
+        let pollDiv = document.createElement('div');
+        pollDiv.classList.add('poll-options');
+        pollDiv.innerHTML = `
+          <input type="text" class="poll-option" placeholder="Option 1">
+          <input type="text" class="poll-option" placeholder="Option 2">
+          <input type="text" class="poll-option" placeholder="Option 3">
+          <button type="button" class="addOption">➕ Add Option</button>
+        `;
+
+        fieldWrapper.appendChild(pollDiv);
+        formFields.appendChild(fieldWrapper);
+
+        pollDiv.querySelector('.addOption').addEventListener('click', function() {
+          let newOption = document.createElement('input');
+          newOption.type = 'text';
+          newOption.classList.add('poll-option');
+          newOption.placeholder = 'New Option';
+          pollDiv.insertBefore(newOption, this);
+        });
+
+      } else if (type === 'media') {
+        let fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.classList.add('media-upload');
+        fieldWrapper.appendChild(fileInput);
+        formFields.appendChild(fieldWrapper);
+
+      } else {
+        let inputElement = document.createElement('input');
+        inputElement.type = type;
+        fieldWrapper.appendChild(inputElement);
+        formFields.appendChild(fieldWrapper);
+      }
+    });
+
+    document.getElementById('previewButton').addEventListener('click', function() {
+      saveFormData();
+      displayPreview();
+      document.getElementById('previewDiv').style.display = 'block';
+    });
+
+    document.getElementById('editButton').addEventListener('click', function() {
+      document.getElementById('previewDiv').style.display = 'none';
+    });
+
+    document.getElementById('submitForm').addEventListener('click', function() {
+      saveFormData();
+      alert('Form submitted with the following data:\n' + JSON.stringify(formData, null, 2));
+      displayPreview(); // Keep submitted data visible
+    });
+
+    function saveFormData() {
+      formData = {};
+
+      document.querySelectorAll('.form-group').forEach(group => {
+        const label = group.querySelector('label').textContent;
+        let value = "";
+
+        if (group.querySelector('input[type="text"], input[type="email"], input[type="number"], textarea')) {
+          value = group.querySelector('input, textarea').value;
+        } 
+        
+        if (group.querySelector('.poll-options')) {
+          let options = group.querySelectorAll('.poll-option');
+          value = Array.from(options).map(opt => opt.value).filter(v => v !== "").join(', ');
+        }
+
+        if (group.querySelector('.media-upload')) {
+          const file = group.querySelector('.media-upload').files[0];
+          value = file ? file.name : "No file uploaded.";
+        }
+
+        formData[label] = value;
+      });
+    }
+
+    function displayPreview() {
+      const previewContent = document.getElementById('previewContent');
+      previewContent.innerHTML = "";
+
+      for (let label in formData) {
+        let previewItem = document.createElement('p');
+        previewItem.innerHTML = `<strong>${label}:</strong> ${formData[label]}`;
+        previewContent.appendChild(previewItem);
+      }
+    }
+  </script>
+</body>
+</html>
